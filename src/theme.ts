@@ -1,3 +1,40 @@
-import { createTheme } from '@mui/material/styles';
+import {createTheme} from '@mui/material/styles';
 
-export const theme = createTheme({});
+export const theme = createTheme({
+    components: {
+        MuiButton: {
+            styleOverrides: {
+                root: {
+                    textTransform: "none",
+                    padding: "0px",
+                },
+                contained: {
+                    height: "30px",
+                    backgroundColor: "#0095f6",
+                    color: "white",
+                    "&:hover": {
+                        backgroundColor: "#0095f6",
+                        opacity: "0.7",
+                    },
+                    "&:disabled": {
+                        opacity: "0.3",
+                        backgroundColor: "#0095f6",
+                        color: "white",
+                    },
+                },
+                text: {
+                    minWidth: "20px",
+                    fontSize: "16px",
+                    color: "#0095f6",
+                    fontWeight: "bold",
+                    "&:active": {
+                        opacity: "0.3",
+                    },
+                    "&:hover": {
+                        background: "none",
+                    },
+                },
+            },
+        },
+    },
+});
