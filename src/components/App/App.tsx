@@ -1,45 +1,52 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styles from "./App.module.scss";
-import {Box, Button, Stack, TextareaAutosize, Typography} from "@mui/material";
-import {Note} from "../Note/Note";
-import {ReactComponent as New} from "../../assets/icon/new.svg"
+import { Box, Stack } from "@mui/material";
+import { NoteInput } from "../NoteInput/NoteInput";
+import { NoteCardList } from "../NoteCardList/NoteCardList";
+import { NoteHeader } from "../NoteHeader/NoteHeader";
+import { Tags } from "../Tags/Tags";
+import { INote, ISelectedNote } from "./types";
+
+const INITIAL_STATE = {
+  notes: [
+    { id: "1", text: "some #text" },
+    { id: "2", text: "some text2" },
+    { id: "3", text: "some #test1" },
+  ],
+  tags: ["#test1", "#test2"],
+};
 
 export const App: React.FC = () => {
-    const [text, setText] = useState("")
-
-    const handleChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setText(e.target.value);
-    };
-    const addedNote = () => {
-        return
-    }
-
-
-    return (
-        <Box className={styles.wrapper} display="flex" justifyContent="center" alignItems="center">
-            <Stack className={styles.notes} width="70%" flexDirection="row">
-                <Stack width="30%" border="1px solid #dbdbdb">
-                    <Note />
-                </Stack>
-                <Stack width="100%">
-                    <Stack height="15%" border="1px solid #dbdbdb" justifyContent="space-between" alignItems="center"
-                        flexDirection="row" className={styles.inputText} p="10px">
-                        <Typography fontSize="22px">Notes</Typography>
-                        <Button>
-                            <New />
-                        </Button>
-                    </Stack>
-                    <Stack height="55%" border="1px solid #dbdbdb" className={styles.inputText}>
-                        <TextareaAutosize maxRows={4}
-                            // onChange={handleChangeText}
-                            aria-label="maximum height"
-                            style={{ width: "100%", maxWidth: "625px", height: "100%", opacity: "0.5" }} />
-                    </Stack>
-                    <Stack height="30%" border="1px solid #dbdbdb" className={styles.inputText}>
-                        Tags
-                    </Stack>
-                </Stack>
-            </Stack>
-        </Box>
-    );
+  const [notes, setNotes] = useState<INote[]>(INITIAL_STATE.notes);
+  const [tags, setTags] = useState<string[]>(INITIAL_STATE.tags);
+  const [selectedNote, setSelectedNote] = useState<ISelectedNote>();
+  const [filteredTags, setFilteredTags] = useState<string[]>([]);
+  console.log(selectedNote);
+  return (
+    <Box
+      className={styles.wrapper}
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+    >
+      <Stack className={styles.notes} width="70%" flexDirection="row">
+        <NoteCardList
+          setNotes={setNotes}
+          notes={notes}
+          setSelectedNote={setSelectedNote}
+          filteredTags={filteredTags}
+        />
+        <Stack width="100%">
+          <NoteHeader setNotes={setNotes} setSelectedNote={setSelectedNote} />
+          <NoteInput
+            selectedNote={selectedNote}
+            setSelectedNote={setSelectedNote}
+            setTags={setTags}
+            setNotes={setNotes}
+          />
+          <Tags tags={tags} setFilteredTags={setFilteredTags} />
+        </Stack>
+      </Stack>
+    </Box>
+  );
 };
