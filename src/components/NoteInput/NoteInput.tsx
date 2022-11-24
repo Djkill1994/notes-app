@@ -92,9 +92,7 @@ export const NoteInput: FC<INoteInputProps> = ({
             }
             onKeyUp={(e) => handleNoteChange(e)}
           />
-          {selectedNote?.mode === "new" && (
-            <Button onClick={handleNoteSave}>save</Button>
-          )}
+          {selectedNote?.mode && <Button onClick={handleNoteSave}>save</Button>}
         </Stack>
       ) : (
         <Typography>Please select note</Typography>
