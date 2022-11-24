@@ -21,7 +21,7 @@ export const App: React.FC = () => {
   const [tags, setTags] = useState<string[]>(INITIAL_STATE.tags);
   const [selectedNote, setSelectedNote] = useState<ISelectedNote>();
   const [filteredTags, setFilteredTags] = useState<string[]>([]);
-  console.log(selectedNote);
+
   return (
     <Box
       className={styles.wrapper}
